@@ -27,9 +27,10 @@ RUN mkdir -p $HOME/.jupyter/
 RUN echo "from IPython.lib import passwd" >> $HOME/.jupyter/jupyter_notebook_config.py
 RUN echo "password = passwd('easy')" >> $HOME/.jupyter/jupyter_notebook_config.py
 RUN echo c.NotebookApp.password = password >> $HOME/.jupyter/jupyter_notebook_config.py
+RUN echo c.NotebookApp.token = '' >> $HOME/.jupyter/jupyter_notebook_config.py
 # RUN echo "c.NotebookApp.token='easy'" >> $HOME/.jupyter/jupyter_notebook_config.py
 
 RUN cat $HOME/.jupyter/jupyter_notebook_config.py
 WORKDIR $HOME
 
-# CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
