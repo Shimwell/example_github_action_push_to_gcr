@@ -20,12 +20,16 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-RUN mkdir src
-WORKDIR src/
-COPY . .
+# RUN mkdir src
+# WORKDIR src/
+# COPY . .
 
 ENV PORT 8888
 
-RUN jupyter notebook --generate-config
+# RUN jupyter notebook --generate-config
+#Configure container to support easier access
+
+RUN mkdir -p $HOME/.jupyter/
+RUN echo "c.NotebookApp.token='easy'" >> $HOME/.jupyter/jupyter_notebook_config.py
 
 CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
