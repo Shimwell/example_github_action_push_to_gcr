@@ -20,15 +20,11 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-# RUN mkdir src
-# WORKDIR src/
-# COPY . .
 
+#this sets the port, gcr is looking for this varible
 ENV PORT 8888
 
-# RUN jupyter notebook --generate-config
-#Configure container to support easier access
-
+# this sets the token to "easy" need to avoid the generation of a complex one
 RUN mkdir -p $HOME/.jupyter/
 RUN echo "c.NotebookApp.token='easy'" >> $HOME/.jupyter/jupyter_notebook_config.py
 
