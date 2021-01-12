@@ -22,15 +22,15 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 ENV PORT 8888
 
 # this sets the token to "easy" need to avoid the generation of a complex one
-RUN mkdir -p $HOME/.jupyter/
+RUN mkdir -p .jupyter/
 
-RUN echo "from IPython.lib import passwd" >> $HOME/.jupyter/jupyter_notebook_config.py
-RUN echo "password = passwd('easy')" >> $HOME/.jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.password = password >> $HOME/.jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.token = '' >> $HOME/.jupyter/jupyter_notebook_config.py
-# RUN echo "c.NotebookApp.token='easy'" >> $HOME/.jupyter/jupyter_notebook_config.py
+RUN echo "from IPython.lib import passwd" >> .jupyter/jupyter_notebook_config.py
+RUN echo "password = passwd('easy')" >> .jupyter/jupyter_notebook_config.py
+RUN echo c.NotebookApp.password = password >> .jupyter/jupyter_notebook_config.py
+RUN echo c.NotebookApp.token = '' >> .jupyter/jupyter_notebook_config.py
+# RUN echo "c.NotebookApp.token='easy'" >> .jupyter/jupyter_notebook_config.py
 
-RUN cat $HOME/.jupyter/jupyter_notebook_config.py
-WORKDIR $HOME
+RUN cat .jupyter/jupyter_notebook_config.py
+# WORKDIR $HOME
 
 CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
