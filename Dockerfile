@@ -24,10 +24,10 @@ ENV PORT 8888
 # this sets the token to "easy" need to avoid the generation of a complex one
 RUN mkdir -p .jupyter/
 
-RUN echo "from IPython.lib import passwd" >> .jupyter/jupyter_notebook_config.py
-RUN echo "password = passwd('easy')" >> .jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.password = password >> .jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.token = '' >> .jupyter/jupyter_notebook_config.py
+# RUN echo "from IPython.lib import passwd" >> .jupyter/jupyter_notebook_config.py
+# RUN echo "password = passwd('easy')" >> .jupyter/jupyter_notebook_config.py
+RUN echo c.NotebookApp.password = "''" >> .jupyter/jupyter_notebook_config.py
+RUN echo c.NotebookApp.token = "''" >> .jupyter/jupyter_notebook_config.py
 # RUN echo "c.NotebookApp.token='easy'" >> .jupyter/jupyter_notebook_config.py
 
 RUN cat .jupyter/jupyter_notebook_config.py
