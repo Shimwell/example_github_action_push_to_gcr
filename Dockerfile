@@ -10,27 +10,13 @@ FROM continuumio/miniconda3
 # installing cadquery and jupyter
 RUN conda install jupyter -y
 
-
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.6.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-
 #this sets the port, gcr is looking for this varible
 ENV PORT 8888
 
-# this sets the token to "easy" need to avoid the generation of a complex one
-RUN mkdir -p .jupyter/
-
-# RUN echo "from IPython.lib import passwd" >> .jupyter/jupyter_notebook_config.py
-# RUN echo "password = passwd('easy')" >> .jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.password = "''" >> .jupyter/jupyter_notebook_config.py
-RUN echo c.NotebookApp.token = "''" >> .jupyter/jupyter_notebook_config.py
-# RUN echo "c.NotebookApp.token='easy'" >> .jupyter/jupyter_notebook_config.py
-
-RUN cat .jupyter/jupyter_notebook_config.py
-# WORKDIR $HOME
-
-CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token='paramak'", "--NotebookApp.password='paramak'"]
